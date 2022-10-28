@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #######################################################################################
-## Terra Invicta Save Editor v0.2.3
+## Terra Invicta Save Editor v0.2.4
 ##
 ## Copyright (C) 2022 George Markeloff
 ## 
@@ -12,7 +12,7 @@
 ## You are strongly encouraged to back up your save file before modifying it.
 #######################################################################################
 
-import json, gzip, os, wx, gui, game_data
+import json, gzip, os, webbrowser, wx, gui, game_data
 
 # Make a class that inherits from the "Main" frame created in wxFormBuilder.
 class ti_save_editor(gui.Main):
@@ -187,7 +187,10 @@ class ti_save_editor(gui.Main):
             f = open(save_location, "w")
             f.write(text_data)
             f.close()
-            
+    
+    def open_github(self, event):
+        webbrowser.open_new_tab("https://github.com/antillie/terra-invicta-save-editor")
+    
     # Keeps track of which faction tab is selected.
     def tab_changed(self, event):
         self.page = self.app_tabs.GetPageText(event.GetSelection())
@@ -1521,7 +1524,7 @@ class ti_save_editor(gui.Main):
     def about_box(self, event):
         
         message = """
-                    Terra Invicta Save Editor v0.2.3
+                    Terra Invicta Save Editor v0.2.4
                     
                     Copyright (C) 2022 George Markeloff
                     

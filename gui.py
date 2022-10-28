@@ -5162,6 +5162,7 @@ class Main ( wx.Frame ):
 		self.Bind( wx.EVT_MENU, self.save_file, id = self.save.GetId() )
 		self.Bind( wx.EVT_MENU, self.save_as, id = self.saveas.GetId() )
 		self.Bind( wx.EVT_MENU, self.on_quit, id = self.quit.GetId() )
+		self.Bind( wx.EVT_MENU, self.open_github, id = self.github.GetId() )
 		self.Bind( wx.EVT_MENU, self.about_box, id = self.about.GetId() )
 		self.app_tabs.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.tab_changed )
 		self.research_slot1.Bind( wx.EVT_CHOICE, self.change_research_1 )
@@ -5676,6 +5677,9 @@ class Main ( wx.Frame ):
 		event.Skip()
 
 	def on_quit( self, event ):
+		event.Skip()
+
+	def open_github( self, event ):
 		event.Skip()
 
 	def about_box( self, event ):
