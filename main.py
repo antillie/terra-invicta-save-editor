@@ -523,18 +523,25 @@ class ti_save_editor(gui.Main):
                 
     # Updates the global research section of the UI.
     def update_global_research(self):
-        slot1_index = game_data.tech_list.index(self.global_research[0]["techTemplateName"])
-        self.research_slot1.SetSelection(slot1_index)
-        self.research1_progress.SetValue(str(self.global_research[0]["accumulatedResearch"]))
+        try:
+            slot1_index = game_data.tech_list.index(self.global_research[0]["techTemplateName"])
+            self.research_slot1.SetSelection(slot1_index)
+            self.research1_progress.SetValue(str(self.global_research[0]["accumulatedResearch"]))
+        except:
+            print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
+        try:
+            slot2_index = game_data.tech_list.index(self.global_research[1]["techTemplateName"])
+            self.research_slot2.SetSelection(slot2_index)
+            self.research2_progress.SetValue(str(self.global_research[1]["accumulatedResearch"]))
+        except:
+            print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
+        try:
+            slot3_index = game_data.tech_list.index(self.global_research[2]["techTemplateName"])
+            self.research_slot3.SetSelection(slot3_index)
+            self.research3_progress.SetValue(str(self.global_research[2]["accumulatedResearch"]))
+        except:
+            print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
         
-        slot2_index = game_data.tech_list.index(self.global_research[1]["techTemplateName"])
-        self.research_slot2.SetSelection(slot2_index)
-        self.research2_progress.SetValue(str(self.global_research[1]["accumulatedResearch"]))
-        
-        slot3_index = game_data.tech_list.index(self.global_research[2]["techTemplateName"])
-        self.research_slot3.SetSelection(slot3_index)
-        self.research3_progress.SetValue(str(self.global_research[2]["accumulatedResearch"]))
-    
     # The three functions handle changing the global research.
     def change_research_1(self, event):
         self.global_research[0]["techTemplateName"] = event.GetString()
