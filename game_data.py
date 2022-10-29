@@ -139,7 +139,7 @@ global_techs = {
 "MissiontoJupiter": 10000,
 "MissiontoMars": 2500,
 "MissiontoSaturn": 25000,
-"MissiontoSpace": 250,
+"MissionToSpace": 250,
 "MissiontotheAsteroids": 3500,
 "MissiontotheInnerPlanets": 15000,
 "MissiontotheMoon": 1000,
