@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #######################################################################################
-## Terra Invicta Save Editor v0.2.4
+## Terra Invicta Save Editor v0.2.5
 ##
 ## Copyright (C) 2022 George Markeloff
 ## 
@@ -93,7 +93,7 @@ class ti_save_editor(gui.Main):
         
         self.councilors = {}
         
-    # Prompts the user to select a TI save file to load using a the system's standard open file dialog.
+    # Prompts the user to select a TI save file to load using the system's standard open file dialog.
     def open_file(self, event):
         with wx.FileDialog(self, "Open Terra Invicta Save File", wildcard="Terra Invicta Saves (*.gz;*.json)|*.gz;*.json", style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST, defaultDir=self.docs) as fileDialog:
 
@@ -103,12 +103,13 @@ class ti_save_editor(gui.Main):
             self.active_file = fileDialog.GetPath()
             self.load_save()
     
-    # Opens the file at the location passed in from the open_file function, opens it, and parses the JSON so we can work with it.
+    # Opens the file at the location selected in the open_file function, reads it, and parses the JSON into a dictionary so we can work with it.
     def load_save(self):
         
-        # Check the file extenstion to see if the save is compressed.
+        # Split the filename on the "." so we can get the file extension.
         parts = self.active_file.split(".")
         
+        # Use the file extension to determine if we are using compression or not, open the file accordingly, and make a note of if we are using compression or not.
         if parts[1] == "gz":
             # Open compressed save files with gzip.
             f = gzip.open(self.active_file, "rb")
@@ -124,41 +125,49 @@ class ti_save_editor(gui.Main):
             f.close()
             self.using_compression = False
         
-        # Parse the save data into a JSON object so we can work with it.
+        # Parse the JSON data from the save file into a dictionary so we can work with it.
         self.data = json.loads(text)
         
+        # Some shortcuts to make addressing these parts of the save easier.
         self.global_research = self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalResearchState"][0]["Value"]["techProgress"]
         self.finished_global_techs = self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalResearchState"][0]["Value"]["finishedTechsNames"]
                     
         # Update the UI with the new data.
         self.update_ui_data()
     
+    # Saves the current data, overwriting the most recently opened file.
     def save_file(self, event):
         
         # Don't try to write anything if we haven't opened a save file yet.
         if self.using_compression == "":
             return
         
-        # Make our save data dictionary a string with pretty spacing.
+        # Make our save data dictionary a JSON string with pretty spacing exactly like the game does.
         text_data = json.dumps(self.data, indent=4, separators=(",", ": "))
         
         # Write the new file in either gzip or text format depending on what type of file we opened.
         if self.using_compression:
+            # Gzip needs binary input so convert our utf-8 JSON string to binary.
             binary_data = text_data.encode()
             f = gzip.open(self.active_file, "wb")
             f.write(binary_data)
             f.close()
         else:
+            # Uncompressed save files can simply be written to disk directly.
             f = open(self.active_file, "w")
             f.write(text_data)
             f.close()
     
+    # Uses a stanndard system save dialog to prompt the user for the filename and location at which to save a file.
     def save_as(self, event):
         
+        # Don't try to write anything if we haven't opened a save file yet.
         if self.using_compression == "":
             return
+        # Compressed save files should have a ".gz" file extension.
         elif self.using_compression == True:
             wildcard = "Compressed Terra Invicta Save (*.gz)|*.gz"
+        # Uncompressed save files should have a ".json" file extension.
         elif self.using_compression == False:
             wildcard = "Uncompressed Terra Invicta Save (*.json)|*.json"
         
@@ -170,20 +179,23 @@ class ti_save_editor(gui.Main):
         # Confirm before overwiriting an existing file.
         if os.path.exists(save_location):
             confirm = wx.MessageDialog(None, ("Overwrite exiting file?"), ("Target File Already Exists"), wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION).ShowModal()
-
-        if confirm != wx.ID_YES:
-            return
+            
+            # If the user didn't decide to overwrite the existing file then don't do anything.
+            if confirm != wx.ID_YES:
+                return
         
-        # Make our save data dictionary a string with pretty spacing.
+        # Make our save data dictionary a string with pretty spacing exactly like the game does..
         text_data = json.dumps(self.data, indent=4, separators=(",", ": "))
         
         # Write the new file in either gzip or text format depending on what type of file we opened.
         if self.using_compression:
+            # Gzip needs binary input so convert our utf-8 JSON string to binary.
             binary_data = text_data.encode()
             f = gzip.open(save_location, "wb")
             f.write(binary_data)
             f.close()
         else:
+            # Uncompressed save files can simply be written to disk directly.
             f = open(save_location, "w")
             f.write(text_data)
             f.close()
@@ -195,6 +207,7 @@ class ti_save_editor(gui.Main):
     def tab_changed(self, event):
         self.page = self.app_tabs.GetPageText(event.GetSelection())
     
+    # Keeps track of which councilor tab is selected.
     def sub_tab_changed(self, event):
         self.sub_page = event.GetEventObject().GetPageText(event.GetSelection())
         
@@ -216,37 +229,37 @@ class ti_save_editor(gui.Main):
                 self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
                 if not item["Value"]["isAI"]:
                     self.player_faction = "humanity"
-                    #self.player_flag1.SetValue(True)
+                    self.player_flag1.SetValue(True)
             elif item["Value"]["name"] == "ExploitPlayer":
                 self.faction_ids["initative"] = self.get_faction_id_from_player_id(item["Value"]["ID"]["value"])
                 self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
                 if not item["Value"]["isAI"]:
                     self.player_faction = "initative"
-                    #self.player_flag2.SetValue(True)
+                    self.player_flag2.SetValue(True)
             elif item["Value"]["name"] == "SubmitPlayer":
                 self.faction_ids["servants"] = self.get_faction_id_from_player_id(item["Value"]["ID"]["value"])
                 self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
                 if not item["Value"]["isAI"]:
                     self.player_faction = "servants"
-                    #self.player_flag3.SetValue(True)
+                    self.player_flag3.SetValue(True)
             elif item["Value"]["name"] == "AppeasePlayer":
                 self.faction_ids["protectorate"] = self.get_faction_id_from_player_id(item["Value"]["ID"]["value"])
                 self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
                 if not item["Value"]["isAI"]:
                     self.player_faction = "protectorate"
-                    #self.player_flag4.SetValue(True)
+                    self.player_flag4.SetValue(True)
             elif item["Value"]["name"] == "CooperatePlayer":
                 self.faction_ids["academy"] = self.get_faction_id_from_player_id(item["Value"]["ID"]["value"])
                 self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
                 if not item["Value"]["isAI"]:
                     self.player_faction = "academy"
-                    #self.player_flag5.SetValue(True)
+                    self.player_flag5.SetValue(True)
             elif item["Value"]["name"] == "EscapePlayer":
                 self.faction_ids["exodus"] = self.get_faction_id_from_player_id(item["Value"]["ID"]["value"])
                 self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
                 if not item["Value"]["isAI"]:
                     self.player_faction = "exodus"
-                    #self.player_flag6.SetValue(True)
+                    self.player_flag6.SetValue(True)
             
         # Update each faction's resource tab.
         self.update_resources()
@@ -282,7 +295,8 @@ class ti_save_editor(gui.Main):
             return faction_id
         except:
             return None
-            
+    
+    # Displays each faction's resources in the UI.
     def update_resources(self):
         for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
             if item["Key"]["value"] == self.faction_ids["resist"]:
@@ -369,7 +383,8 @@ class ti_save_editor(gui.Main):
                 self.resist_fissiles6.SetValue(str(item["Value"]["resources"]["Fissiles"]))
                 self.resist_exotics6.SetValue(str(item["Value"]["resources"]["Exotics"]))
                 self.resist_antimatter6.SetValue(str(item["Value"]["resources"]["Antimatter"]))
-                
+    
+    # Displays each faction's research projects in the UI.
     def update_projects(self):
         for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
             if item["Key"]["value"] == self.faction_ids["resist"]:
@@ -520,6 +535,7 @@ class ti_save_editor(gui.Main):
         self.research_slot3.SetSelection(slot3_index)
         self.research3_progress.SetValue(str(self.global_research[2]["accumulatedResearch"]))
     
+    # The three functions handle changing the global research.
     def change_research_1(self, event):
         self.global_research[0]["techTemplateName"] = event.GetString()
     
@@ -528,7 +544,8 @@ class ti_save_editor(gui.Main):
     
     def change_research_3(self, event):
         self.global_research[2]["techTemplateName"] = event.GetString()
-        
+    
+    # These three functions handle changing global research progress.
     def update_research_1(self, event):
         new_value = self.research1_progress.GetValue()
         try:
@@ -562,6 +579,7 @@ class ti_save_editor(gui.Main):
             except:
                 self.research3_progress.SetValue("")
     
+    # Handles changing which faction is controled by the player per the checkboxes.
     def player_checkbox(self, event):
         caller = event.GetEventObject()
         
@@ -582,7 +600,8 @@ class ti_save_editor(gui.Main):
         else:
             # Don't allow people to uncheck the box for the currently active faction.
             caller.SetValue(True)
-        
+    
+    # These three functions handle changing faction research projects.
     def update_project_1(self, event):
         caller = event.GetEventObject()
         for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
@@ -622,6 +641,7 @@ class ti_save_editor(gui.Main):
                     except:
                         caller.SetValue("")
     
+    # This batch of functions handles changing faction resources.
     def update_money(self, event):
         caller = event.GetEventObject()
         for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
@@ -765,6 +785,7 @@ class ti_save_editor(gui.Main):
                     except:
                         caller.SetValue("")
     
+    # Manages process of diaplying counilor data in the UI.
     def update_councilors(self):
         for fname, fid in self.faction_ids.items():
             x = 0
@@ -777,6 +798,7 @@ class ti_save_editor(gui.Main):
                 except:
                     continue
     
+    # Handles the changing of councilor professions.
     def change_councilor_job(self, event):
         parts = self.sub_page.split()
         index = int(parts[1])
@@ -788,6 +810,7 @@ class ti_save_editor(gui.Main):
             except:
                 continue
     
+    # The next batch of functions handles changing councilor attributes.
     def change_councilor_persuasion(self, event):
         caller = event.GetEventObject()
         try:
@@ -964,6 +987,7 @@ class ti_save_editor(gui.Main):
             except:
                 continue
     
+    # Displays counilor data in the IU. Called in a sequantial manner by update_councilors.
     def display_councilor(self, councilor, faction, slot):
         if faction == "resist":
             if slot == 0:
@@ -1524,7 +1548,7 @@ class ti_save_editor(gui.Main):
     def about_box(self, event):
         
         message = """
-                    Terra Invicta Save Editor v0.2.4
+                    Terra Invicta Save Editor v0.2.5
                     
                     Copyright (C) 2022 George Markeloff
                     
