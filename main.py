@@ -1667,7 +1667,7 @@ class ti_save_editor(gui.Main):
                 self.resist_c_security56.SetValue(str(councilor["Value"]["attributes"]["Security"]))
                 self.resist_c_loyalty56.SetValue(str(councilor["Value"]["attributes"]["Loyalty"]))
     
-    # Changes a councilor' age.
+    # Changes a councilor's age.
     def change_age(self, event):
         try:
             new_age = self.c_age.GetValue()
@@ -1675,11 +1675,6 @@ class ti_save_editor(gui.Main):
         except:
             return
         index = int(parts[1])
-        
-        if new_age < 18:
-            new_age = 18
-        if new_age > 200:
-            new_age = 200
         
         for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"]:
             try:
@@ -1689,7 +1684,6 @@ class ti_save_editor(gui.Main):
                     self.show_councilor_extras()
             except:
                 continue
-    
     
     # Displays the about dialog.
     def about_box(self, event):
