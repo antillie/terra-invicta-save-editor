@@ -817,6 +817,55 @@ class Main ( wx.Frame ):
 
 		bSizer3.Add( self.resist_sub_tabs, 1, wx.EXPAND |wx.ALL, 5 )
 
+		additional_c_traits = wx.FlexGridSizer( 0, 4, 0, 0 )
+		additional_c_traits.SetFlexibleDirection( wx.BOTH )
+		additional_c_traits.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_staticText581 = wx.StaticText( self.resist_panel, wx.ID_ANY, u"Active Traits", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText581.Wrap( -1 )
+
+		additional_c_traits.Add( self.m_staticText581, 0, wx.ALL, 5 )
+
+		self.m_staticText583 = wx.StaticText( self.resist_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText583.Wrap( -1 )
+
+		additional_c_traits.Add( self.m_staticText583, 0, wx.ALL, 5 )
+
+		self.m_staticText582 = wx.StaticText( self.resist_panel, wx.ID_ANY, u"Avilable Traits", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText582.Wrap( -1 )
+
+		additional_c_traits.Add( self.m_staticText582, 0, wx.ALL, 5 )
+
+		self.m_staticText580 = wx.StaticText( self.resist_panel, wx.ID_ANY, u"Age", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText580.Wrap( -1 )
+
+		additional_c_traits.Add( self.m_staticText580, 0, wx.ALL, 5 )
+
+		m_listBox1Choices = []
+		self.m_listBox1 = wx.ListBox( self.resist_panel, wx.ID_ANY, wx.DefaultPosition, wx.Size( 200,145 ), m_listBox1Choices, 0 )
+		additional_c_traits.Add( self.m_listBox1, 0, wx.ALL, 5 )
+
+		bSizer11 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_button1 = wx.Button( self.resist_panel, wx.ID_ANY, u">>", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer11.Add( self.m_button1, 0, wx.ALL, 5 )
+
+		self.m_button2 = wx.Button( self.resist_panel, wx.ID_ANY, u"<<", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer11.Add( self.m_button2, 0, wx.ALL, 5 )
+
+
+		additional_c_traits.Add( bSizer11, 1, wx.EXPAND, 5 )
+
+		m_listBox2Choices = []
+		self.m_listBox2 = wx.ListBox( self.resist_panel, wx.ID_ANY, wx.DefaultPosition, wx.Size( 200,145 ), m_listBox2Choices, 0 )
+		additional_c_traits.Add( self.m_listBox2, 0, wx.ALL, 5 )
+
+		self.c_age = wx.SpinCtrl( self.resist_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 18, 200, 0 )
+		additional_c_traits.Add( self.c_age, 0, wx.ALL, 5 )
+
+
+		bSizer3.Add( additional_c_traits, 1, wx.EXPAND, 5 )
+
 
 		self.resist_panel.SetSizer( bSizer3 )
 		self.resist_panel.Layout()
@@ -5241,6 +5290,10 @@ class Main ( wx.Frame ):
 		self.resist_c_science5.Bind( wx.EVT_TEXT, self.change_councilor_science )
 		self.resist_c_security5.Bind( wx.EVT_TEXT, self.change_councilor_security )
 		self.resist_c_loyalty5.Bind( wx.EVT_TEXT, self.change_councilor_loyalty )
+		self.m_button1.Bind( wx.EVT_BUTTON, self.remove_trait )
+		self.m_button2.Bind( wx.EVT_BUTTON, self.add_trait )
+		self.c_age.Bind( wx.EVT_SPINCTRL, self.change_age )
+		self.c_age.Bind( wx.EVT_TEXT, self.change_age )
 		self.player_flag1.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
 		self.resist_sub_tabs1.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
 		self.resist_money1.Bind( wx.EVT_TEXT, self.update_money )
@@ -5824,6 +5877,16 @@ class Main ( wx.Frame ):
 
 
 
+
+
+	def remove_trait( self, event ):
+		event.Skip()
+
+	def add_trait( self, event ):
+		event.Skip()
+
+	def change_age( self, event ):
+		event.Skip()
 
 
 

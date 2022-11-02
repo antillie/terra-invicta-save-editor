@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #######################################################################################
-## Terra Invicta Save Editor v0.2.5
+## Terra Invicta Save Editor v0.3.0
 ##
 ## Copyright (C) 2022 George Markeloff
 ## 
@@ -13,6 +13,8 @@
 #######################################################################################
 
 import json, gzip, os, webbrowser, wx, gui, game_data
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 # Make a class that inherits from the "Main" frame created in wxFormBuilder.
 class ti_save_editor(gui.Main):
@@ -91,6 +93,16 @@ class ti_save_editor(gui.Main):
         self.player_checkboxes.append(self.player_flag5)
         self.player_checkboxes.append(self.player_flag6)
         
+        self.m_staticText580.Hide()
+        self.m_staticText581.Hide()
+        self.m_staticText582.Hide()
+        self.m_staticText583.Hide()
+        self.m_listBox1.Hide()
+        self.m_listBox2.Hide()
+        self.m_button1.Hide()
+        self.m_button2.Hide()
+        self.c_age.Hide()
+        
         self.councilors = {}
         
     # Prompts the user to select a TI save file to load using the system's standard open file dialog.
@@ -131,10 +143,29 @@ class ti_save_editor(gui.Main):
         # Some shortcuts to make addressing these parts of the save easier.
         self.global_research = self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalResearchState"][0]["Value"]["techProgress"]
         self.finished_global_techs = self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalResearchState"][0]["Value"]["finishedTechsNames"]
-                    
+        
+        # Get the current in game date.
+        self.game_date = self.make_date_object(self.data["gamestates"]["PavonisInteractive.TerraInvicta.TITimeState"][0]["Value"]["currentDateTime"])
+        
         # Update the UI with the new data.
         self.update_ui_data()
     
+    # Converts a Terra Invicta JSON date object into a Python datetime object.
+    def make_date_object(self, game_date):
+        
+        if game_date["month"] < 10:
+            month = "0" + str(game_date["month"])
+        else:
+            month = str(game_date["month"])
+        if game_date["day"] < 10:
+            day = "0" + str(game_date["day"])
+        else:
+            day = str(game_date["day"])
+            
+        datetime_str = str(game_date["year"]) + ":" + month + ":" + day
+        date_object = datetime.strptime(datetime_str, "%Y:%m:%d")
+        return date_object
+        
     # Saves the current data, overwriting the most recently opened file.
     def save_file(self, event):
         
@@ -210,6 +241,28 @@ class ti_save_editor(gui.Main):
     # Keeps track of which councilor tab is selected.
     def sub_tab_changed(self, event):
         self.sub_page = event.GetEventObject().GetPageText(event.GetSelection())
+        
+        if "Councilor" not in self.sub_page:
+            self.m_staticText580.Hide()
+            self.m_staticText581.Hide()
+            self.m_staticText582.Hide()
+            self.m_staticText583.Hide()
+            self.m_listBox1.Hide()
+            self.m_listBox2.Hide()
+            self.m_button1.Hide()
+            self.m_button2.Hide()
+            self.c_age.Hide()
+        else:
+            self.m_staticText580.Show()
+            self.m_staticText581.Show()
+            self.m_staticText582.Show()
+            self.m_staticText583.Show()
+            self.m_listBox1.Show()
+            self.m_listBox2.Show()
+            self.m_button1.Show()
+            self.m_button2.Show()
+            self.c_age.Show()
+            self.show_councilor_extras()
         
     # Manages loading the data from the save file into the UI.
     def update_ui_data(self):
@@ -535,12 +588,12 @@ class ti_save_editor(gui.Main):
             self.research2_progress.SetValue(str(self.global_research[1]["accumulatedResearch"]))
         except:
             print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
-        #try:
-        slot3_index = game_data.tech_list.index(self.global_research[2]["techTemplateName"])
-        self.research_slot3.SetSelection(slot3_index)
-        self.research3_progress.SetValue(str(self.global_research[2]["accumulatedResearch"]))
-        #except:
-        #    print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
+        try:
+            slot3_index = game_data.tech_list.index(self.global_research[2]["techTemplateName"])
+            self.research_slot3.SetSelection(slot3_index)
+            self.research3_progress.SetValue(str(self.global_research[2]["accumulatedResearch"]))
+        except:
+            print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
         
     # The three functions handle changing the global research.
     def change_research_1(self, event):
@@ -991,6 +1044,70 @@ class ti_save_editor(gui.Main):
                             caller.SetValue(str(item["Value"]["attributes"]["Loyalty"]))
                         except:
                             caller.SetValue("")
+            except:
+                continue
+    
+    # Displays the age and traits of the currently selected councilor.
+    def show_councilor_extras(self):
+        try:
+            parts = self.sub_page.split()
+        except:
+            return
+        index = int(parts[1])
+        
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"]:
+            try:
+                if item["Value"]["ID"]["value"] == self.councilors[str(self.get_active_faction_id())][index]:
+                    birthday = self.make_date_object(item["Value"]["dateBorn"])
+                    age_delta = self.game_date - birthday
+                    age = int(age_delta.days / 365)
+                    self.c_age.SetValue(age)
+                    
+                    active_traits = []
+                    non_active_traits = []
+                    
+                    for trait in game_data.traits:
+                        if trait in item["Value"]["traitTemplateNames"]:
+                            active_traits.append(trait)
+                        else:
+                            non_active_traits.append(trait)
+
+                    self.m_listBox1.Set(active_traits)
+                    self.m_listBox2.Set(non_active_traits)
+            except:
+                continue
+    
+    # Adds a trait to a councilor.
+    def add_trait(self, event):
+        try:
+            selection = self.m_listBox2.GetString(self.m_listBox2.GetSelection())
+            parts = self.sub_page.split()
+        except:
+            return
+        index = int(parts[1])
+        
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"]:
+            try:
+                if item["Value"]["ID"]["value"] == self.councilors[str(self.get_active_faction_id())][index]:
+                    item["Value"]["traitTemplateNames"].append(selection)
+                    self.show_councilor_extras()
+            except:
+                continue
+                
+    # Removes a trait from a councilor.
+    def remove_trait(self, event):
+        try:
+            selection = self.m_listBox1.GetString(self.m_listBox1.GetSelection())
+            parts = self.sub_page.split()
+        except:
+            return
+        index = int(parts[1])
+        
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"]:
+            try:
+                if item["Value"]["ID"]["value"] == self.councilors[str(self.get_active_faction_id())][index]:
+                    item["Value"]["traitTemplateNames"].remove(selection)
+                    self.show_councilor_extras()        
             except:
                 continue
     
@@ -1549,12 +1666,36 @@ class ti_save_editor(gui.Main):
                 self.resist_c_science56.SetValue(str(councilor["Value"]["attributes"]["Science"]))
                 self.resist_c_security56.SetValue(str(councilor["Value"]["attributes"]["Security"]))
                 self.resist_c_loyalty56.SetValue(str(councilor["Value"]["attributes"]["Loyalty"]))
-                
+    
+    # Changes a councilor' age.
+    def change_age(self, event):
+        try:
+            new_age = self.c_age.GetValue()
+            parts = self.sub_page.split()
+        except:
+            return
+        index = int(parts[1])
+        
+        if new_age < 18:
+            new_age = 18
+        if new_age > 200:
+            new_age = 200
+        
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"]:
+            try:
+                if item["Value"]["ID"]["value"] == self.councilors[str(self.get_active_faction_id())][index]:
+                    new_birthday = self.game_date - relativedelta(years=new_age)
+                    item["Value"]["dateBorn"]["year"] = int(new_birthday.strftime("%Y"))
+                    self.show_councilor_extras()
+            except:
+                continue
+    
+    
     # Displays the about dialog.
     def about_box(self, event):
         
         message = """
-                    Terra Invicta Save Editor v0.2.5
+                    Terra Invicta Save Editor v0.3.0
                     
                     Copyright (C) 2022 George Markeloff
                     
