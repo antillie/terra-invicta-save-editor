@@ -266,6 +266,6 @@ traits = [
 "Indebted",
 "Indulgent",
 "Pariah",
-"EnemyOfTheState",
+"EnemyoftheState",
 "NonGrata",
 ]
