@@ -587,13 +587,13 @@ class ti_save_editor(gui.Main):
             self.research_slot2.SetSelection(slot2_index)
             self.research2_progress.SetValue(str(self.global_research[1]["accumulatedResearch"]))
         except:
-            print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
+            print("Error: Could not find " + self.global_research[1]["techTemplateName"] + " in game data.")
         try:
             slot3_index = game_data.tech_list.index(self.global_research[2]["techTemplateName"])
             self.research_slot3.SetSelection(slot3_index)
             self.research3_progress.SetValue(str(self.global_research[2]["accumulatedResearch"]))
         except:
-            print("Error: Could not find " + self.global_research[0]["techTemplateName"] + " in game data.")
+            print("Error: Could not find " + self.global_research[2]["techTemplateName"] + " in game data.")
         
     # The three functions handle changing the global research.
     def change_research_1(self, event):
@@ -1207,8 +1207,8 @@ class ti_save_editor(gui.Main):
                 self.resist_c_security6.SetValue(str(councilor["Value"]["attributes"]["Security"]))
                 self.resist_c_loyalty6.SetValue(str(councilor["Value"]["attributes"]["Loyalty"]))
             if slot == 1:
-                self.resist_c_fname111.SetLabel(councilor["Value"]["personalName"])
-                self.resist_c_lname111.SetLabel(councilor["Value"]["familyName"])
+                self.resist_c_fname11.SetLabel(councilor["Value"]["personalName"])
+                self.resist_c_lname11.SetLabel(councilor["Value"]["familyName"])
                 job_index = game_data.jobs.index(councilor["Value"]["typeTemplateName"])
                 self.resist_c_class11.SetSelection(job_index)
                 self.resist_c_persuasion11.SetValue(str(councilor["Value"]["attributes"]["Persuasion"]))
