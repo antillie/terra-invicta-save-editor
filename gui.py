@@ -100,12 +100,25 @@ class Main ( wx.Frame ):
 		self.research_panel.SetSizer( fgSizer1 )
 		self.research_panel.Layout()
 		fgSizer1.Fit( self.research_panel )
-		self.app_tabs.AddPage( self.research_panel, u"Global Research", False )
+		self.app_tabs.AddPage( self.research_panel, u"Global Research", True )
 		self.resist_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer3 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer1 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag = wx.CheckBox( self.resist_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer3.Add( self.player_flag, 0, wx.ALL, 5 )
+		gSizer1.Add( self.player_flag, 0, wx.ALL, 5 )
+
+		self.m_staticText5811 = wx.StaticText( self.resist_panel, wx.ID_ANY, u"Alien Hate", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText5811.Wrap( -1 )
+
+		gSizer1.Add( self.m_staticText5811, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_spinCtrl2 = wx.SpinCtrl( self.resist_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		gSizer1.Add( self.m_spinCtrl2, 0, wx.ALL, 5 )
+
+
+		bSizer3.Add( gSizer1, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs = wx.Notebook( self.resist_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel = wx.Panel( self.resist_sub_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -821,12 +834,25 @@ class Main ( wx.Frame ):
 		self.resist_panel.SetSizer( bSizer3 )
 		self.resist_panel.Layout()
 		bSizer3.Fit( self.resist_panel )
-		self.app_tabs.AddPage( self.resist_panel, u"The Resistance", True )
+		self.app_tabs.AddPage( self.resist_panel, u"The Resistance", False )
 		self.imperium_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer31 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer11 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag1 = wx.CheckBox( self.imperium_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer31.Add( self.player_flag1, 0, wx.ALL, 5 )
+		gSizer11.Add( self.player_flag1, 0, wx.ALL, 5 )
+
+		self.m_staticText58111 = wx.StaticText( self.imperium_panel, wx.ID_ANY, u"Alien Hate", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText58111.Wrap( -1 )
+
+		gSizer11.Add( self.m_staticText58111, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_spinCtrl21 = wx.SpinCtrl( self.imperium_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		gSizer11.Add( self.m_spinCtrl21, 0, wx.ALL, 5 )
+
+
+		bSizer31.Add( gSizer11, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs1 = wx.Notebook( self.imperium_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel1 = wx.Panel( self.resist_sub_tabs1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -1546,8 +1572,21 @@ class Main ( wx.Frame ):
 		self.initiave_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer32 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer12 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag2 = wx.CheckBox( self.initiave_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer32.Add( self.player_flag2, 0, wx.ALL, 5 )
+		gSizer12.Add( self.player_flag2, 0, wx.ALL, 5 )
+
+		self.m_staticText58112 = wx.StaticText( self.initiave_panel, wx.ID_ANY, u"Alien Hate", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText58112.Wrap( -1 )
+
+		gSizer12.Add( self.m_staticText58112, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_spinCtrl22 = wx.SpinCtrl( self.initiave_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		gSizer12.Add( self.m_spinCtrl22, 0, wx.ALL, 5 )
+
+
+		bSizer32.Add( gSizer12, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs2 = wx.Notebook( self.initiave_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel2 = wx.Panel( self.resist_sub_tabs2, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -2267,8 +2306,13 @@ class Main ( wx.Frame ):
 		self.heratic_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer33 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer121 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag3 = wx.CheckBox( self.heratic_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer33.Add( self.player_flag3, 0, wx.ALL, 5 )
+		gSizer121.Add( self.player_flag3, 0, wx.ALL, 5 )
+
+
+		bSizer33.Add( gSizer121, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs3 = wx.Notebook( self.heratic_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel3 = wx.Panel( self.resist_sub_tabs3, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -2988,8 +3032,21 @@ class Main ( wx.Frame ):
 		self.protectorate_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer34 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer122 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag4 = wx.CheckBox( self.protectorate_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer34.Add( self.player_flag4, 0, wx.ALL, 5 )
+		gSizer122.Add( self.player_flag4, 0, wx.ALL, 5 )
+
+		self.m_staticText581122 = wx.StaticText( self.protectorate_panel, wx.ID_ANY, u"Alien Hate", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText581122.Wrap( -1 )
+
+		gSizer122.Add( self.m_staticText581122, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_spinCtrl24 = wx.SpinCtrl( self.protectorate_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		gSizer122.Add( self.m_spinCtrl24, 0, wx.ALL, 5 )
+
+
+		bSizer34.Add( gSizer122, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs4 = wx.Notebook( self.protectorate_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel4 = wx.Panel( self.resist_sub_tabs4, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -3709,8 +3766,21 @@ class Main ( wx.Frame ):
 		self.academy_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer35 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer1221 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag5 = wx.CheckBox( self.academy_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer35.Add( self.player_flag5, 0, wx.ALL, 5 )
+		gSizer1221.Add( self.player_flag5, 0, wx.ALL, 5 )
+
+		self.m_staticText5811221 = wx.StaticText( self.academy_panel, wx.ID_ANY, u"Alien Hate", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText5811221.Wrap( -1 )
+
+		gSizer1221.Add( self.m_staticText5811221, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_spinCtrl25 = wx.SpinCtrl( self.academy_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		gSizer1221.Add( self.m_spinCtrl25, 0, wx.ALL, 5 )
+
+
+		bSizer35.Add( gSizer1221, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs5 = wx.Notebook( self.academy_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel5 = wx.Panel( self.resist_sub_tabs5, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -4430,8 +4500,21 @@ class Main ( wx.Frame ):
 		self.exodus_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		bSizer36 = wx.BoxSizer( wx.VERTICAL )
 
+		gSizer1222 = wx.GridSizer( 0, 3, 0, 0 )
+
 		self.player_flag6 = wx.CheckBox( self.exodus_panel, wx.ID_ANY, u"Player Faction", wx.DefaultPosition, wx.DefaultSize, 0 )
-		bSizer36.Add( self.player_flag6, 0, wx.ALL, 5 )
+		gSizer1222.Add( self.player_flag6, 0, wx.ALL, 5 )
+
+		self.m_staticText5811222 = wx.StaticText( self.exodus_panel, wx.ID_ANY, u"Alien Hate", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText5811222.Wrap( -1 )
+
+		gSizer1222.Add( self.m_staticText5811222, 0, wx.ALL|wx.ALIGN_RIGHT, 5 )
+
+		self.m_spinCtrl26 = wx.SpinCtrl( self.exodus_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		gSizer1222.Add( self.m_spinCtrl26, 0, wx.ALL, 5 )
+
+
+		bSizer36.Add( gSizer1222, 1, wx.EXPAND, 5 )
 
 		self.resist_sub_tabs6 = wx.Notebook( self.exodus_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.resist_resource_panel6 = wx.Panel( self.resist_sub_tabs6, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
@@ -5221,6 +5304,7 @@ class Main ( wx.Frame ):
 		self.research_slot3.Bind( wx.EVT_CHOICE, self.change_research_3 )
 		self.research3_progress.Bind( wx.EVT_TEXT, self.update_research_3 )
 		self.player_flag.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
+		self.m_spinCtrl2.Bind( wx.EVT_SPINCTRL, self.change_hate )
 		self.resist_sub_tabs.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
 		self.resist_money.Bind( wx.EVT_TEXT, self.update_money )
 		self.resist_influence.Bind( wx.EVT_TEXT, self.update_influence )
@@ -5291,6 +5375,7 @@ class Main ( wx.Frame ):
 		self.resist_c_security5.Bind( wx.EVT_TEXT, self.change_councilor_security )
 		self.resist_c_loyalty5.Bind( wx.EVT_TEXT, self.change_councilor_loyalty )
 		self.player_flag1.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
+		self.m_spinCtrl21.Bind( wx.EVT_SPINCTRL, self.change_hate )
 		self.resist_sub_tabs1.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
 		self.resist_money1.Bind( wx.EVT_TEXT, self.update_money )
 		self.resist_influence1.Bind( wx.EVT_TEXT, self.update_influence )
@@ -5361,6 +5446,7 @@ class Main ( wx.Frame ):
 		self.resist_c_security51.Bind( wx.EVT_TEXT, self.change_councilor_security )
 		self.resist_c_loyalty51.Bind( wx.EVT_TEXT, self.change_councilor_loyalty )
 		self.player_flag2.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
+		self.m_spinCtrl22.Bind( wx.EVT_SPINCTRL, self.change_hate )
 		self.resist_sub_tabs2.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
 		self.resist_money2.Bind( wx.EVT_TEXT, self.update_money )
 		self.resist_influence2.Bind( wx.EVT_TEXT, self.update_influence )
@@ -5571,6 +5657,7 @@ class Main ( wx.Frame ):
 		self.resist_c_security54.Bind( wx.EVT_TEXT, self.change_councilor_security )
 		self.resist_c_loyalty54.Bind( wx.EVT_TEXT, self.change_councilor_loyalty )
 		self.player_flag5.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
+		self.m_spinCtrl25.Bind( wx.EVT_SPINCTRL, self.change_hate )
 		self.resist_sub_tabs5.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
 		self.resist_money5.Bind( wx.EVT_TEXT, self.update_money )
 		self.resist_influence5.Bind( wx.EVT_TEXT, self.update_influence )
@@ -5641,6 +5728,7 @@ class Main ( wx.Frame ):
 		self.resist_c_security55.Bind( wx.EVT_TEXT, self.change_councilor_security )
 		self.resist_c_loyalty55.Bind( wx.EVT_TEXT, self.change_councilor_loyalty )
 		self.player_flag6.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
+		self.m_spinCtrl26.Bind( wx.EVT_SPINCTRL, self.change_hate )
 		self.resist_sub_tabs6.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
 		self.resist_money6.Bind( wx.EVT_TEXT, self.update_money )
 		self.resist_influence6.Bind( wx.EVT_TEXT, self.update_influence )
@@ -5762,6 +5850,9 @@ class Main ( wx.Frame ):
 	def player_checkbox( self, event ):
 		event.Skip()
 
+	def change_hate( self, event ):
+		event.Skip()
+
 	def sub_tab_changed( self, event ):
 		event.Skip()
 
@@ -5833,6 +5924,10 @@ class Main ( wx.Frame ):
 
 	def change_councilor_loyalty( self, event ):
 		event.Skip()
+
+
+
+
 
 
 

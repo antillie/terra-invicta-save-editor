@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #######################################################################################
-## Terra Invicta Save Editor v0.3.0
+## Terra Invicta Save Editor v0.4.0
 ##
 ## Copyright (C) 2022 George Markeloff
 ## 
@@ -313,7 +313,14 @@ class ti_save_editor(gui.Main):
                 if not item["Value"]["isAI"]:
                     self.player_faction = "exodus"
                     self.player_flag6.SetValue(True)
-            
+            elif item["Value"]["name"] == "AlienPlayer":
+                self.faction_ids["alien"] = self.get_faction_id_from_player_id(item["Value"]["ID"]["value"])
+                self.councilors[str(self.get_faction_id_from_player_id(item["Value"]["ID"]["value"]))] = [""]
+        
+        # The alien faction data is read a bit differently.    
+        self.aliens = self.get_aliens()
+        self.read_alien_hate()
+                
         # Update each faction's resource tab.
         self.update_resources()
         
@@ -348,6 +355,31 @@ class ti_save_editor(gui.Main):
             return faction_id
         except:
             return None
+    
+    # Assigns the alien faction data block an easily accessable label.
+    def get_aliens(self):
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.faction_ids["alien"]:
+                return item
+        
+    # Reads the alien's hate levels and puts them in the UI.
+    def read_alien_hate(self):
+        self.alien_hate = {}
+        for item in self.aliens["Value"]["factionHate"]:
+            self.alien_hate[str(item["Key"]["value"])] = item["Value"]
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.faction_ids["resist"]:
+                self.m_spinCtrl2.SetValue(int(self.alien_hate[str(self.faction_ids["resist"])]))
+            if item["Key"]["value"] == self.faction_ids["humanity"]:
+                self.m_spinCtrl21.SetValue(int(self.alien_hate[str(self.faction_ids["humanity"])]))
+            if item["Key"]["value"] == self.faction_ids["initative"]:
+                self.m_spinCtrl22.SetValue(int(self.alien_hate[str(self.faction_ids["initative"])]))
+            if item["Key"]["value"] == self.faction_ids["protectorate"]:
+                self.m_spinCtrl24.SetValue(int(self.alien_hate[str(self.faction_ids["protectorate"])]))
+            if item["Key"]["value"] == self.faction_ids["academy"]:
+                self.m_spinCtrl25.SetValue(int(self.alien_hate[str(self.faction_ids["academy"])]))
+            if item["Key"]["value"] == self.faction_ids["exodus"]:
+                self.m_spinCtrl26.SetValue(int(self.alien_hate[str(self.faction_ids["exodus"])]))
     
     # Displays each faction's resources in the UI.
     def update_resources(self):
@@ -1685,11 +1717,18 @@ class ti_save_editor(gui.Main):
             except:
                 continue
     
+    # Changes how much hate a faction has with the aliens.
+    def change_hate(self, event):
+        new_hate = event.GetEventObject().GetValue()
+        for item in self.aliens["Value"]["factionHate"]:
+            if item["Key"]["value"] == self.get_active_faction_id():
+                item["Value"] = float(new_hate)
+                
     # Displays the about dialog.
     def about_box(self, event):
         
         message = """
-                    Terra Invicta Save Editor v0.3.0
+                    Terra Invicta Save Editor v0.4.0
                     
                     Copyright (C) 2022 George Markeloff
                     
