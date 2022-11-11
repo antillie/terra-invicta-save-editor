@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #######################################################################################
-## Terra Invicta Save Editor v0.4.0
+## Terra Invicta Save Editor v0.4.1
 ##
 ## Copyright (C) 2022 George Markeloff
 ## 
@@ -320,7 +320,10 @@ class ti_save_editor(gui.Main):
         # The alien faction data is read a bit differently.    
         self.aliens = self.get_aliens()
         self.read_alien_hate()
-                
+        
+        # Load the number of loose nukes.
+        self.rouge_nuke_count.SetValue(self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"]["Value"]["looseNukes"])
+        
         # Update each faction's resource tab.
         self.update_resources()
         
@@ -334,6 +337,10 @@ class ti_save_editor(gui.Main):
         for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
             if item["Value"]["player"]["value"] == player_id:
                 return item["Key"]["value"]
+    
+    # Changes the number of loose nukes.
+    def change_loose_nukes(self, event):
+        self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"]["Value"]["looseNukes"] = int(self.rouge_nuke_count.GetValue())
     
     # Get the faction ID for whatever faction tab is currently selected.
     def get_active_faction_id(self):
@@ -1728,7 +1735,7 @@ class ti_save_editor(gui.Main):
     def about_box(self, event):
         
         message = """
-                    Terra Invicta Save Editor v0.4.0
+                    Terra Invicta Save Editor v0.4.1
                     
                     Copyright (C) 2022 George Markeloff
                     

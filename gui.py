@@ -96,6 +96,20 @@ class Main ( wx.Frame ):
 		self.research3_progress = wx.TextCtrl( self.research_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		fgSizer1.Add( self.research3_progress, 0, wx.ALL, 5 )
 
+		self.m_staticline1 = wx.StaticLine( self.research_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		fgSizer1.Add( self.m_staticline1, 0, wx.EXPAND |wx.ALL, 5 )
+
+		self.m_staticline2 = wx.StaticLine( self.research_panel, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.LI_HORIZONTAL )
+		fgSizer1.Add( self.m_staticline2, 0, wx.EXPAND |wx.ALL, 5 )
+
+		self.m_staticText587 = wx.StaticText( self.research_panel, wx.ID_ANY, u"Rouge Warheads:", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText587.Wrap( -1 )
+
+		fgSizer1.Add( self.m_staticText587, 0, wx.ALL, 5 )
+
+		self.rouge_nuke_count = wx.SpinCtrl( self.research_panel, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.SP_ARROW_KEYS, 0, 100, 0 )
+		fgSizer1.Add( self.rouge_nuke_count, 0, wx.ALL, 5 )
+
 
 		self.research_panel.SetSizer( fgSizer1 )
 		self.research_panel.Layout()
@@ -5303,6 +5317,7 @@ class Main ( wx.Frame ):
 		self.research2_progress.Bind( wx.EVT_TEXT, self.update_research_2 )
 		self.research_slot3.Bind( wx.EVT_CHOICE, self.change_research_3 )
 		self.research3_progress.Bind( wx.EVT_TEXT, self.update_research_3 )
+		self.rouge_nuke_count.Bind( wx.EVT_SPINCTRL, self.change_loose_nukes )
 		self.player_flag.Bind( wx.EVT_CHECKBOX, self.player_checkbox )
 		self.m_spinCtrl2.Bind( wx.EVT_SPINCTRL, self.change_hate )
 		self.resist_sub_tabs.Bind( wx.EVT_NOTEBOOK_PAGE_CHANGED, self.sub_tab_changed )
@@ -5845,6 +5860,9 @@ class Main ( wx.Frame ):
 		event.Skip()
 
 	def update_research_3( self, event ):
+		event.Skip()
+
+	def change_loose_nukes( self, event ):
 		event.Skip()
 
 	def player_checkbox( self, event ):
