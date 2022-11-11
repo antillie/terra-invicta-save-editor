@@ -322,7 +322,7 @@ class ti_save_editor(gui.Main):
         self.read_alien_hate()
         
         # Load the number of loose nukes.
-        self.rouge_nuke_count.SetValue(self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"]["Value"]["looseNukes"])
+        self.rouge_nuke_count.SetValue(self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["looseNukes"])
         
         # Update each faction's resource tab.
         self.update_resources()
@@ -340,7 +340,7 @@ class ti_save_editor(gui.Main):
     
     # Changes the number of loose nukes.
     def change_loose_nukes(self, event):
-        self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"]["Value"]["looseNukes"] = int(self.rouge_nuke_count.GetValue())
+        self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["looseNukes"] = int(self.rouge_nuke_count.GetValue())
     
     # Get the faction ID for whatever faction tab is currently selected.
     def get_active_faction_id(self):
