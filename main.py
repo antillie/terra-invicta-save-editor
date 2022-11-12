@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #######################################################################################
-## Terra Invicta Save Editor v0.4.1
+## Terra Invicta Save Editor v0.4.3
 ##
 ## Copyright (C) 2022 George Markeloff
 ## 
@@ -102,6 +102,18 @@ class ti_save_editor(gui.Main):
         self.m_button1.Hide()
         self.m_button2.Hide()
         self.c_age.Hide()
+        
+        self.m_staticText589.Hide()
+        self.m_staticText590.Hide()
+        self.m_staticText591.Hide()
+        self.m_staticText592.Hide()
+        self.m_button3.Hide()
+        self.m_button4.Hide()
+        self.m_button5.Hide()
+        self.m_button6.Hide()
+        self.c_projects.Hide()
+        self.m_projects.Hide()
+        self.a_projects.Hide()
         
         self.councilors = {}
         
@@ -237,22 +249,69 @@ class ti_save_editor(gui.Main):
     # Keeps track of which faction tab is selected.
     def tab_changed(self, event):
         self.page = self.app_tabs.GetPageText(event.GetSelection())
-    
-    # Keeps track of which councilor tab is selected.
-    def sub_tab_changed(self, event):
-        self.sub_page = event.GetEventObject().GetPageText(event.GetSelection())
+        self.sub_tab_changed(self, self.get_active_faction_id())
         
-        if "Councilor" not in self.sub_page:
-            self.m_staticText580.Hide()
-            self.m_staticText581.Hide()
-            self.m_staticText582.Hide()
-            self.m_staticText583.Hide()
-            self.m_listBox1.Hide()
-            self.m_listBox2.Hide()
-            self.m_button1.Hide()
-            self.m_button2.Hide()
-            self.c_age.Hide()
+    # Keeps track of which councilor tab is selected.
+    def sub_tab_changed(self, event, faction=None):
+        if faction == None:
+            self.sub_page = event.GetEventObject().GetPageText(event.GetSelection())
         else:
+            for key, value in self.faction_ids.items():
+                if faction == value:
+                    if key == "resist":
+                        self.sub_page = self.resist_sub_tabs.GetSelection()
+                    if key == "humanity":
+                        self.sub_page = self.resist_sub_tabs1.GetSelection()
+                    if key == "initative":
+                        self.sub_page = self.resist_sub_tabs2.GetSelection()
+                    if key == "servants":
+                        self.sub_page = self.resist_sub_tabs3.GetSelection()
+                    if key == "protectorate":
+                        self.sub_page = self.resist_sub_tabs4.GetSelection()
+                    if key == "academy":
+                        self.sub_page = self.resist_sub_tabs5.GetSelection()
+                    if key == "exodus":
+                        self.sub_page = self.resist_sub_tabs6.GetSelection()
+
+        self.m_staticText580.Hide()
+        self.m_staticText581.Hide()
+        self.m_staticText582.Hide()
+        self.m_staticText583.Hide()
+        self.m_listBox1.Hide()
+        self.m_listBox2.Hide()
+        self.m_button1.Hide()
+        self.m_button2.Hide()
+        self.c_age.Hide()
+        self.m_staticText589.Hide()
+        self.m_staticText590.Hide()
+        self.m_staticText591.Hide()
+        self.m_staticText592.Hide()
+        self.m_button3.Hide()
+        self.m_button4.Hide()
+        self.m_button5.Hide()
+        self.m_button6.Hide()
+        self.c_projects.Hide()
+        self.m_projects.Hide()
+        self.a_projects.Hide()
+        
+        if self.sub_page == 0:
+            return
+        elif self.sub_page == 1:
+            self.sub_page = "Project R"
+        elif self.sub_page == 2:
+            self.sub_page = "Councilor 1"
+        elif self.sub_page == 3:
+            self.sub_page = "Councilor 2"
+        elif self.sub_page == 4:
+            self.sub_page = "Councilor 3"
+        elif self.sub_page == 5:
+            self.sub_page = "Councilor 4"
+        elif self.sub_page == 6:
+            self.sub_page = "Councilor 5"
+        elif self.sub_page == 9:
+            self.sub_page = "Councilor 6"
+        
+        if "Councilor" in self.sub_page:
             self.m_staticText580.Show()
             self.m_staticText581.Show()
             self.m_staticText582.Show()
@@ -263,6 +322,22 @@ class ti_save_editor(gui.Main):
             self.m_button2.Show()
             self.c_age.Show()
             self.show_councilor_extras()
+        elif "Project" in self.sub_page:
+            self.m_staticText589.Show()
+            self.m_staticText590.Show()
+            self.m_staticText591.Show()
+            self.m_staticText592.Show()
+            self.m_button3.Show()
+            self.m_button4.Show()
+            self.m_button5.Show()
+            self.m_button6.Show()
+            self.c_projects.Show()
+            self.m_projects.Show()
+            self.a_projects.Show()
+            self.show_project_extras()
+        
+        # Update the positions of the GUI widgets so the councilor and project area's can share the same space.
+        self.Layout()
         
     # Manages loading the data from the save file into the UI.
     def update_ui_data(self):
@@ -349,7 +424,7 @@ class ti_save_editor(gui.Main):
                 faction_id = self.faction_ids["resist"]
             elif self.page == "Humanity First":
                 faction_id = self.faction_ids["humanity"]
-            elif self.page == "The Initative":
+            elif self.page == "The Initiative":
                 faction_id = self.faction_ids["initative"]
             elif self.page == "The Servants":
                 faction_id = self.faction_ids["servants"]
@@ -357,11 +432,12 @@ class ti_save_editor(gui.Main):
                 faction_id = self.faction_ids["protectorate"]
             elif self.page == "The Academy":
                 faction_id = self.faction_ids["academy"]
-            elif self.page == "Exodus":
+            elif self.page == "Project Exodus":
                 faction_id = self.faction_ids["exodus"]
+            print(faction_id)
             return faction_id
         except:
-            return None
+            return 0
     
     # Assigns the alien faction data block an easily accessable label.
     def get_aliens(self):
@@ -612,6 +688,22 @@ class ti_save_editor(gui.Main):
                     self.resist_project3_progress6.SetValue(str(item["Value"]["currentProjectProgress"][2]["accumulatedResearch"]))
                 except:
                     self.resist_project36.SetLabel("-None Set-")
+    
+    # Shows the available, completed, and missed projects.
+    def show_project_extras(self):
+        
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.get_active_faction_id():
+                self.c_projects.Set(item["Value"]["finishedProjectNames"])
+                self.m_projects.Set(item["Value"]["missedProjects"])
+                
+                possible_projects = []
+                for entry in item["Value"]["activeProjectTriggers"]:
+                    possible_projects.append(entry["projectTemplateName"])
+                    
+                display_a_projects = item["Value"]["availableProjectNames"] + possible_projects
+                
+                self.a_projects.Set(display_a_projects)
                 
     # Updates the global research section of the UI.
     def update_global_research(self):
@@ -1730,12 +1822,68 @@ class ti_save_editor(gui.Main):
         for item in self.aliens["Value"]["factionHate"]:
             if item["Key"]["value"] == self.get_active_faction_id():
                 item["Value"] = float(new_hate)
+    
+    # Makes a project no longer complete.
+    def undo_project(self, event):
+        selection = self.c_projects.GetString(self.c_projects.GetSelection())
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.get_active_faction_id():
+                item["Value"]["finishedProjectNames"].remove(selection)
+                item["Value"]["availableProjectNames"].append(selection)
+                self.show_project_extras()
                 
+    # Completes a project.
+    def complete_project(self, event):
+        selection = self.a_projects.GetString(self.a_projects.GetSelection())
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.get_active_faction_id():
+                self.remove_from_available_projects(item, selection)
+                item["Value"]["finishedProjectNames"].append(selection)
+                self.show_project_extras()
+    
+    # Unlocks a missed project.
+    def unlock_project(self, event):
+        selection = self.m_projects.GetString(self.m_projects.GetSelection())
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.get_active_faction_id():
+                item["Value"]["missedProjects"].remove(selection)
+                item["Value"]["availableProjectNames"].append(selection)
+                self.show_project_extras()
+    
+    # Locks an available project.
+    def lock_project(self, event):
+        selection = self.a_projects.GetString(self.a_projects.GetSelection())
+        for item in self.data["gamestates"]["PavonisInteractive.TerraInvicta.TIFactionState"]:
+            if item["Key"]["value"] == self.get_active_faction_id():
+                self.remove_from_available_projects(item, selection)
+                item["Value"]["missedProjects"].append(selection)
+                self.show_project_extras()
+    
+    # Handles the fact that "available" projects counts both unlocked projects and projects that are still trying to unlock.
+    def remove_from_available_projects(self, faction, project):
+        try:
+            item["Value"]["availableProjectNames"].remove(project)
+        except:
+            pass
+        try:
+            x = 0
+            found = False
+            for item in faction["Value"]["activeProjectTriggers"]:
+                if project == item["projectTemplateName"]:
+                    found = True
+                    break
+                else:
+                    x = x + 1
+            if found:
+                del faction["Value"]["activeProjectTriggers"][x]
+        except:
+            pass
+    
     # Displays the about dialog.
     def about_box(self, event):
         
         message = """
-                    Terra Invicta Save Editor v0.4.1
+                    Terra Invicta Save Editor v0.4.3
                     
                     Copyright (C) 2022 George Markeloff
                     

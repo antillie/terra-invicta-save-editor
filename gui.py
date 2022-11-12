@@ -17,7 +17,7 @@ import wx.xrc
 class Main ( wx.Frame ):
 
 	def __init__( self, parent ):
-		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Terra Invicta Save Editor", pos = wx.DefaultPosition, size = wx.Size( 1040,740 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+		wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = u"Terra Invicta Save Editor", pos = wx.DefaultPosition, size = wx.Size( 840,710 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
 		self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -50,7 +50,13 @@ class Main ( wx.Frame ):
 
 		bSizer = wx.BoxSizer( wx.VERTICAL )
 
+		fgSizer61 = wx.FlexGridSizer( 0, 1, 0, 0 )
+		fgSizer61.SetFlexibleDirection( wx.BOTH )
+		fgSizer61.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
 		self.app_tabs = wx.Notebook( self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.app_tabs.SetMinSize( wx.Size( 840,-1 ) )
+
 		self.research_panel = wx.Panel( self.app_tabs, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
 		fgSizer1 = wx.FlexGridSizer( 0, 2, 0, 0 )
 		fgSizer1.SetFlexibleDirection( wx.BOTH )
@@ -5246,9 +5252,9 @@ class Main ( wx.Frame ):
 		bSizer36.Fit( self.exodus_panel )
 		self.app_tabs.AddPage( self.exodus_panel, u"Project Exodus", False )
 
-		bSizer.Add( self.app_tabs, 0, wx.EXPAND |wx.ALL, 5 )
+		fgSizer61.Add( self.app_tabs, 1, wx.EXPAND |wx.ALL, 5 )
 
-		additional_c_traits = wx.FlexGridSizer( 0, 4, 0, 0 )
+		additional_c_traits = wx.FlexGridSizer( 2, 4, 0, 0 )
 		additional_c_traits.SetFlexibleDirection( wx.BOTH )
 		additional_c_traits.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
@@ -5295,7 +5301,76 @@ class Main ( wx.Frame ):
 		additional_c_traits.Add( self.c_age, 0, wx.ALL, 5 )
 
 
-		bSizer.Add( additional_c_traits, 0, wx.EXPAND, 5 )
+		fgSizer61.Add( additional_c_traits, 0, 0, 5 )
+
+		fgSizer59 = wx.FlexGridSizer( 0, 5, 0, 0 )
+		fgSizer59.SetFlexibleDirection( wx.BOTH )
+		fgSizer59.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+		self.m_staticText589 = wx.StaticText( self, wx.ID_ANY, u"Completed Projects", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText589.Wrap( -1 )
+
+		fgSizer59.Add( self.m_staticText589, 0, wx.ALL, 5 )
+
+		self.m_staticText590 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText590.Wrap( -1 )
+
+		fgSizer59.Add( self.m_staticText590, 0, wx.ALL, 5 )
+
+		self.m_staticText591 = wx.StaticText( self, wx.ID_ANY, u"Available Projects", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText591.Wrap( -1 )
+
+		fgSizer59.Add( self.m_staticText591, 0, wx.ALL, 5 )
+
+		self.m_staticText588 = wx.StaticText( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText588.Wrap( -1 )
+
+		fgSizer59.Add( self.m_staticText588, 0, wx.ALL, 5 )
+
+		self.m_staticText592 = wx.StaticText( self, wx.ID_ANY, u"Missed Projects", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText592.Wrap( -1 )
+
+		fgSizer59.Add( self.m_staticText592, 0, wx.ALL, 5 )
+
+		c_projectsChoices = []
+		self.c_projects = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 150,100 ), c_projectsChoices, 0 )
+		fgSizer59.Add( self.c_projects, 0, wx.ALL, 5 )
+
+		bSizer10 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_button3 = wx.Button( self, wx.ID_ANY, u">>", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer10.Add( self.m_button3, 0, wx.ALL, 5 )
+
+		self.m_button4 = wx.Button( self, wx.ID_ANY, u"<<", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer10.Add( self.m_button4, 0, wx.ALL, 5 )
+
+
+		fgSizer59.Add( bSizer10, 1, wx.EXPAND, 5 )
+
+		a_projectsChoices = []
+		self.a_projects = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 150,100 ), a_projectsChoices, 0 )
+		fgSizer59.Add( self.a_projects, 0, wx.ALL, 5 )
+
+		bSizer111 = wx.BoxSizer( wx.VERTICAL )
+
+		self.m_button5 = wx.Button( self, wx.ID_ANY, u">>", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer111.Add( self.m_button5, 0, wx.ALL, 5 )
+
+		self.m_button6 = wx.Button( self, wx.ID_ANY, u"<<", wx.DefaultPosition, wx.DefaultSize, 0 )
+		bSizer111.Add( self.m_button6, 0, wx.ALL, 5 )
+
+
+		fgSizer59.Add( bSizer111, 1, wx.EXPAND, 5 )
+
+		m_projectsChoices = []
+		self.m_projects = wx.ListBox( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( 150,100 ), m_projectsChoices, 0 )
+		fgSizer59.Add( self.m_projects, 0, wx.ALL, 5 )
+
+
+		fgSizer61.Add( fgSizer59, 0, 0, 5 )
+
+
+		bSizer.Add( fgSizer61, 1, wx.EXPAND, 5 )
 
 
 		self.SetSizer( bSizer )
@@ -5817,6 +5892,10 @@ class Main ( wx.Frame ):
 		self.m_button2.Bind( wx.EVT_BUTTON, self.add_trait )
 		self.c_age.Bind( wx.EVT_SPINCTRL, self.change_age )
 		self.c_age.Bind( wx.EVT_TEXT, self.change_age )
+		self.m_button3.Bind( wx.EVT_BUTTON, self.undo_project )
+		self.m_button4.Bind( wx.EVT_BUTTON, self.complete_project )
+		self.m_button5.Bind( wx.EVT_BUTTON, self.lock_project )
+		self.m_button6.Bind( wx.EVT_BUTTON, self.unlock_project )
 
 	def __del__( self ):
 		pass
@@ -6421,5 +6500,17 @@ class Main ( wx.Frame ):
 	def change_age( self, event ):
 		event.Skip()
 
+
+	def undo_project( self, event ):
+		event.Skip()
+
+	def complete_project( self, event ):
+		event.Skip()
+
+	def lock_project( self, event ):
+		event.Skip()
+
+	def unlock_project( self, event ):
+		event.Skip()
 
 
