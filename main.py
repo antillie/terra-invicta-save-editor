@@ -1862,7 +1862,7 @@ class ti_save_editor(gui.Main):
     # Handles the fact that "available" projects counts both unlocked projects and projects that are still trying to unlock.
     def remove_from_available_projects(self, faction, project):
         try:
-            item["Value"]["availableProjectNames"].remove(project)
+            faction["Value"]["availableProjectNames"].remove(project)
         except:
             pass
         try:
