@@ -434,7 +434,6 @@ class ti_save_editor(gui.Main):
                 faction_id = self.faction_ids["academy"]
             elif self.page == "Project Exodus":
                 faction_id = self.faction_ids["exodus"]
-            print(faction_id)
             return faction_id
         except:
             return 0
