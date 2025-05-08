@@ -176,7 +176,8 @@ jobs = [
 "Activist",
 "Celebrity",
 "Tycoon",
-"Attorney"
+"Attorney",
+"Engineer"
 ]
 
 traits = [
@@ -271,6 +272,6 @@ traits = [
 "Pariah",
 "EnemyoftheState",
 "NonGrata",
-"LossAverse",
-"FamilyTies"
+"FamilyTies",
+"Innovative",
 ]
