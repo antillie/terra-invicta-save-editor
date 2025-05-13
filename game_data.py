@@ -274,4 +274,15 @@ traits = [
 "NonGrata",
 "FamilyTies",
 "Innovative",
+"DefenseContractor",
+"ProjectManager",
+"Powerbroker",
+"Demanding",
+"Academic",
+"Anxious",
+"Pacifist",
+"Reformer",
+"Furitive",
+"Awareness",
+"ExpectsVictory"
 ]
