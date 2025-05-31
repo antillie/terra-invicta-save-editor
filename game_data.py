@@ -278,7 +278,6 @@ traits = [
 "ProjectManager",
 "Powerbroker",
 "Demanding",
-"Academic",
 "Anxious",
 "Pacifist",
 "Reformer",
