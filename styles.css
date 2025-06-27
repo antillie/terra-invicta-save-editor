@@ -80,6 +80,12 @@ h1 {
     display: inline  !important;
 }
 
+.wide_button_shove {
+    margin-top: 52px;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+
 .wide_button {
     margin-top: 12px;
     padding-left: 40px !important;
