@@ -309,8 +309,8 @@ function update_stats(){
                 save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["attributes"]["Loyalty"] = parseInt(document.getElementById("loyalty" + slot).value);
                 var current_date = make_date_object(save_data["gamestates"]["PavonisInteractive.TerraInvicta.TITimeState"][0]["Value"]["currentDateTime"]);
                 var new_birthday = new Date(Math.abs(current_date.getTime() - (parseInt(document.getElementById("age" + slot).value) * 31536000000)));
-                save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["dateBorn"]["year"] = new_birthday.getFullYear();
-                save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["typeTemplateName"] = parseInt(document.getElementById("class" + slot).value);
+                save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["dateBorn"]["year"] = new_birthday.getFullYear().toString();
+                save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["typeTemplateName"] = document.getElementById("class" + slot).value;
                 slot = slot + 1;
             };
         }
