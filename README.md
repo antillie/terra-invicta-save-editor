@@ -1,6 +1,6 @@
 # terra-invicta-save-editor
 
-A save game editor for Terra Invicta written in Python.
+A graphical web based save game editor for Terra Invicta.
 
 Supports both compressed and uncompressed save files seemlessly.
 
