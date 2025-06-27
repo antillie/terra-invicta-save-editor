@@ -277,7 +277,6 @@ traits = [
 "DefenseContractor",
 "ProjectManager",
 "Powerbroker",
-"Demanding",
 "Anxious",
 "Pacifist",
 "Reformer",
