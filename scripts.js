@@ -292,10 +292,10 @@ function update_stats(){
         // Don't do anything if the user hasn't uploaded a saved game yet.
         return false;
     };
+    var slot = 1;
     if (parseInt(document.getElementById("age" + slot).value) < 18){
         document.getElementById("age" + slot).value = "18";
     };
-    var slot = 1;
     for (var i = 0; i < save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"].length; i++){
         try {
             if (save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["faction"]["value"] == faction_id){
@@ -308,8 +308,8 @@ function update_stats(){
                 save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["attributes"]["Security"] = parseInt(document.getElementById("security" + slot).value);
                 save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["attributes"]["Loyalty"] = parseInt(document.getElementById("loyalty" + slot).value);
                 var current_date = make_date_object(save_data["gamestates"]["PavonisInteractive.TerraInvicta.TITimeState"][0]["Value"]["currentDateTime"]);
-                var new_birth_year = Math.abs(current_date - (parseInt(document.getElementById("age" + slot).value) * 31536000000));
-                save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["dateBorn"]["year"] = new_birth_year.getFullYear();
+                var new_birthday = new Date(Math.abs(current_date.getTime() - (parseInt(document.getElementById("age" + slot).value) * 31536000000)));
+                save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["dateBorn"]["year"] = new_birthday.getFullYear();
                 save_data["gamestates"]["PavonisInteractive.TerraInvicta.TICouncilorState"][i]["Value"]["typeTemplateName"] = parseInt(document.getElementById("class" + slot).value);
                 slot = slot + 1;
             };

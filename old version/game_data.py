@@ -282,5 +282,6 @@ traits = [
 "Reformer",
 "Furitive",
 "Awareness",
-"ExpectsVictory"
+"ExpectsVictory",
+"Demanding"
 ]
