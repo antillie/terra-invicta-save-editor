@@ -104,6 +104,13 @@ function find_faction(){
     }
     // Display the number of loose nukes.
     document.getElementById("nukes").value = save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["looseNukes"];
+    // Display game project flags.
+    if(save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["scenarioCustomizations"]["variableProjectUnlocks"]){
+        document.getElementById("variable_unlocks").checked = true;
+    };
+    if(save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["scenarioCustomizations"]["showTriggeredProjects"]){
+        document.getElementById("show_triggered").checked = true;
+    };
     // Then move on to displaying faction resources in the UI.
     display_resources();
 };
@@ -267,6 +274,18 @@ function update_project_research(){
             };
             break;
         };
+    };
+    if(document.getElementById("variable_unlocks").checked == true){
+        save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["scenarioCustomizations"]["variableProjectUnlocks"] = true;
+    }
+    else {
+        save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["scenarioCustomizations"]["variableProjectUnlocks"] = false;
+    };
+    if(document.getElementById("show_triggered").checked == true){
+        save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["scenarioCustomizations"]["showTriggeredProjects"] = true;
+    }
+    else {
+        save_data["gamestates"]["PavonisInteractive.TerraInvicta.TIGlobalValuesState"][0]["Value"]["scenarioCustomizations"]["showTriggeredProjects"] = false;
     };
 };
 
