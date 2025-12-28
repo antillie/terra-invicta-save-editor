@@ -40,7 +40,8 @@ function import_save_file(file){
             // If the save is not compressed then set a mime type for later and load the save as a JSON object directly.
             mime_type = "application/json";
             // Hack to fix incorrect JSON edge case.
-            var fixed_save = event.target.result.replaceAll("Infinity,", "\"Infinity\",");
+            var fixed_save = event.target.result.replaceAll("-Infinity,", "\"-Infinity\",");
+            fixed_save = fixed_save.replaceAll("Infinity,", "\"Infinity\",");
             save_data = JSON.parse(fixed_save);
             // Then start updating the UI with information from the save.
             find_faction();
@@ -435,6 +436,7 @@ function export_to_file(){
     // Convert our JSON object to a string with pretty whitespace.
     var saved_game = JSON.stringify(save_data, null, 4);
     // Revert our incorrect JSON edge case fix.
+    saved_game = saved_game.replaceAll("v\"-Infinity\",", "-Infinity,");
     saved_game = saved_game.replaceAll("v\"Infinity\",", "Infinity,");
     // If the user gave us a compressed save file then we need to compress the save data before giving it back to them.
     if (compressed) {
@@ -458,7 +460,8 @@ function unzip(compressed_data){
     // Then decompress it.
     var raw_save_data = pako.inflate(processed_data, { to: "string" });
     // Hack to fix incorrect JSON edge case.
-    var fixed_save = raw_save_data.replaceAll("Infinity,", "\"Infinity\",");
+    var fixed_save = raw_save_data.replaceAll("-Infinity,", "\"-Infinity\",");
+    fixed_save = fixed_save.replaceAll("Infinity,", "\"Infinity\",");
     // Load the data as a JSON object.
     save_data = JSON.parse(fixed_save);
     // Then start updating the UI with information from the save.
